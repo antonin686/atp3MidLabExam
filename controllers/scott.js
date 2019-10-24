@@ -15,7 +15,16 @@ router.get('*', function(req, res, next){
 });
 
 router.get('/home', function(req, res){
-	res.render("scott/home", { user : req.session.un });
+    postModel.getAll('1', function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.render("scott/home", { user : req.session.un, postList: result });
+		}
+	});
+	
 });
 
 
@@ -30,7 +39,7 @@ router.get('/postList', function(req, res){
             //res.render("scott/postList", { user : req.session.un, postList: false });
             res.send("no data");
 		}else{      	
-            console.log(result);
+            //console.log(result);
 			res.render("scott/postList", { user : req.session.un, postList: result });	
 		}
 	});

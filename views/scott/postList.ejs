@@ -98,19 +98,4 @@
 </div>
 
 
-<script>
-$(document).ready(function(){
-  $("#btn-search").click(function(){
-    $.ajax({
-      url: '/admin/employee/search',
-      type: 'GET',
-      dataType: 'json',
-      success: (data) => {
-        console.log('ajax success', data);
-      }
-    })
-  });
-});
-
-</script>
 <%- contentFor('title') %>

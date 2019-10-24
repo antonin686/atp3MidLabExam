@@ -11,7 +11,7 @@
       <a class="nav-link" href="/admin/userList">Users</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Post</a>
+      <a class="nav-link" href="/admin/request">Post Request</a>
     </li>
   </ul>
   <ul class="navbar-nav ml-auto">
@@ -20,7 +20,7 @@
           Welcome, <%= user %>
       </a>
     
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <div class="dropdown-menu" aria-laPbelledby="dropdownMenuLink">
         <a class="dropdown-item" href="/user/profile">Profile</a>
         <a class="dropdown-item" href="/user/logout">Logout</a>
       </div>
@@ -29,16 +29,31 @@
 </nav>
 
 <div class="container">
-  <div class="row">
+  
 
-    <div class="col-md-3">
-      
+    <div class="col-md-12">
+        <div class="card card-body">
+                <% for(var i = 0; i< postList.length; i++) {%>
+            <div class="card">
+                    <div class="card-header">
+                            <%= postList[i].place_name %> 
+                          </div>
+                    
+                    <div class="card-body">
+                            Country: <%= postList[i].country %> <br>
+                            Info: <%= postList[i].place_info %> <br>
+                            History: <%= postList[i].short_history %> <br>
+                            travel Medium: <%= postList[i].travel_medium %> <br>
+                            Cost: <%= postList[i].cost %> <br>
+                            
+                    </div>
+            </div>
+            <% } %>
+        </div>
+        
+            
     </div>
-
-    <div class="col-md-9">
-      
-    </div>
-  </div>  
+  
 </div>
 
 <%- contentFor('title') %>

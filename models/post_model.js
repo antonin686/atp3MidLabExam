@@ -24,8 +24,8 @@ module.exports = {
 			}
 		});	
 	},
-	getAll: function(callback){
-		var sql = "select * from users";
+	getAll: function(status,callback){
+		var sql = `select * from posts where status = ${status}`;
 		
 		db.getResults(sql, function(results){
 			

@@ -1,5 +1,6 @@
 var express = require('express');
 var userModel = require('../models/user_model');
+var postModel = require('../models/post_model');
 
 var router = express.Router();
 
@@ -15,10 +16,33 @@ router.get('*', function(req, res, next){
 });
 
 router.get('/home', function(req, res){
-	res.render("admin/home", { user : req.session.un });
+
+	postModel.getAll(1, function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.render("admin/home", { user : req.session.un, postList: result });
+		}
+	});
+	
 });
 
+// post request
+router.get('/request', function(req, res){
 
+	postModel.getAll(0, function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.render("admin/request", { user : req.session.un, postList: result });
+		}
+	});
+	
+});
 
 // UserList
 
