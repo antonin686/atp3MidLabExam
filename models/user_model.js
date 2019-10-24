@@ -3,7 +3,8 @@ var db = require('./db')
 module.exports = {
 	getById: function(id, callback){
 
-			var sql = "select * from login where id="+id;
+			var sql = "select * from users where u_id="+id;
+			console.log(sql);
 			db.getResults(sql, function(result){
 				if(result.length > 0 ){
 					callback(result[0]);
@@ -43,7 +44,7 @@ module.exports = {
 		});
 	},
 	update: function(user, callback){
-		var sql ="update employee set users='"+ user.username+"', password='"+user.password+"' where id="+user.id;
+		var sql = `update users set u_name ='${user.name}', password='${user.password}', contact= '${user.contact}' where u_id = ${user.u_id}`;
 		
 		//console.log(sql);
 

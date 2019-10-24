@@ -72,9 +72,7 @@ router.get('/user/edit/:id', function(req, res){
 		}else{
 			res.render("admin/user_edit", { user : req.session.un, userInfo: result});
 		}
-	});
-
-	
+	});	
 });
 
 router.post('/employee/edit/:id', function(req, res){

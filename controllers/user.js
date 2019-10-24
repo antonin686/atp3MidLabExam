@@ -38,8 +38,11 @@ router.post('/login', function(req, res){
 // Profile
 
 router.get('/profile', function(req, res){
-
-	var user = req.session.u_id
+	if(req.session.un == null)
+	{
+		res.redirect('/user/login');
+	}
+	var user = req.session.u_id;
 	userModel.getById(user, function(result){
 		if(!result){
             res.send('insert failed');
@@ -52,18 +55,44 @@ router.get('/profile', function(req, res){
 
 // Edit
 
-router.get('/user/edit/:id', function(req, res){
+router.get('/edit/:id', function(req, res){
 	
+	if(req.session.un == null)
+	{
+		res.redirect('/user/login');
+	}
+
 	var user = req.params.id;	
 	userModel.getById(user, function(result){
 		if(!result){
             res.send('insert failed');
 		}else{
-			res.render("admin/user_edit", { user : req.session.un, userInfo: result});
+			res.render("profile_edit", { user : req.session.un, userInfo: result});
 		}
 	});
+});
 
+router.post('/edit/:id', function(req, res){
 	
+	if(req.session.un == null)
+	{
+		res.redirect('/user/login');
+	}
+
+	var user = {
+		u_id : req.params.id,
+		name : req.body.name,
+		contact : req.body.contact,
+		password : req.body.password
+	};	
+
+	userModel.update(user, function(result){
+		if(!result){
+            res.send('insert failed');
+		}else{
+			res.render("/admin/home", { user : req.session.un});
+		}
+	});
 });
 
 

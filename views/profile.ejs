@@ -33,30 +33,29 @@
 <div class="container">  
     <div class="card card-body">
       <div class="p-3 ">
-            <a class="btn btn-primary" href="/user/edit" role="button">Edit</a>
+            <a class="btn btn-primary" href="/user/edit/<%= userInfo.u_id%>" role="button">Edit</a>
     </div>
       <div class="col-md-12">
           <table class="table">
               <tbody>
                   <tr>
                     <th>Id</th>
-                      <td> <%= %> </td>
+                      <td> <%= userInfo.u_id%> </td>
                      
                   </tr>
                   <tr>
                     <th>Name</th>
-                      <td>John</td>
+                    <td> <%= userInfo.u_name%> </td>
                       
                   </tr>
                   <tr>
                     <th>Username</th>
-                      <td>Carter</td>
+                    <td> <%= userInfo.username %> </td>
                       
                   </tr>
                   <tr>
                     <th>Contact</th>
-                      <td>johncarter@mail.com</td>
-                      
+                      <td> <%= userInfo.contact%> </td>
                   </tr>
               </tbody>
           </table>
