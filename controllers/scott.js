@@ -39,27 +39,29 @@ router.get('/postList', function(req, res){
 });
 
 
-// User create
+// Post create
 
-router.get('/user/create', function(req, res){
-	res.render("admin/user_create", { user : req.session.un });
+router.get('/post/create', function(req, res){
+	res.render("scott/post_create", { user : req.session.un });
 });
 
-router.post('/user/create', function(req, res){
+router.post('/post/create', function(req, res){
 
-	var user = {
-		u_name : req.body.name,
-		contact : req.body.contact,
-		username : req.body.username,
-		password : req.body.password,
-		u_type : req.body.u_type
+	var post = {
+		p_name : req.body.place_name,
+		country : req.body.country,
+		p_info : req.body.place_info,
+		short : req.body.short_history,
+        t_medium : req.body.travel_medium,
+        cost : req.body.cost,
+        u_id : req.session.u_id
 	};
 
-	postModel.insert(user, function(status){
+	postModel.insert(post, function(status){
 		if(!status){
             res.send('insert failed');
 		}else{
-			res.redirect('/admin/userList');
+			res.redirect('/scott/postList');
 		}
 	});
 });

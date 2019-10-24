@@ -43,6 +43,7 @@ router.get('/profile', function(req, res){
 		res.redirect('/user/login');
 	}
 	var user = req.session.u_id;
+	
 	userModel.getById(user, function(result){
 		if(!result){
             res.send('insert failed');

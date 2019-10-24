@@ -32,7 +32,7 @@
     <div class="container">
         <ol class="breadcrumb pd-3">
             <li class="breadcrumb-item"><a href="/scott/home">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="/scott/user">User</a></li>      
+            <li class="breadcrumb-item active"><a href="#"></a>Posts</a></li>      
         </ol>  
     </div>
 </div>
@@ -80,6 +80,7 @@
                                     <% if(postList[i].status == 0) {%>
                                     <td> <%='processing' %>  </td> <% }else {%>
                                         <td> <%='accepted' %> </td> <% } %>
+                                    <td>
                                     <a class="btn btn-info" href="/scott/post/edit/<%= postList[i].u_id %>"  role="button">Edit</a>
                                     
                                     </td>

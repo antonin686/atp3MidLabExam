@@ -50,8 +50,8 @@ module.exports = {
 		});	
     },
     
-	insert: function(user, callback){
-		var sql = `insert into users values('', '${user.u_name}', '${user.username}', '${user.password}', '${user.contact}', '${user.u_type}') `;
+	insert: function(post, callback){
+		var sql = `insert into posts values('', '${post.p_name}', '${post.country}', '${post.p_info}', '${post.short}', '${post.t_medium}', '${post.cost}','0', '${post.u_id}') `;
 		db.execute(sql, function(status){
 			callback(status);
 		});
