@@ -7,7 +7,7 @@ var expressLayout = require('express-ejs-layouts');
 var ejs = require('ejs');
 var user = require('./controllers/user');
 var admin = require('./controllers/admin');
-var emp = require('./controllers/emp');
+var scott = require('./controllers/scott');
 //var logout = require('./controllers/logout');
 var app = express();
 
@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 
 app.use('/admin', admin);
 app.use('/user', user);
+app.use('/scott', scott);
 //app.use('/logout', logout);
 app.use(express.static('public'));
 
