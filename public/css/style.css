@@ -1,0 +1,15 @@
+.navbar-dark .nav-item:hover {
+    background-color: white;
+  } 
+  
+  .navbar-dark .nav-item:hover .nav-link {
+    color: black;
+  }
+
+  .navbar-brand{
+    padding-top: 0;
+  }
+  .bread
+  {
+    padding-top: 20px !important;
+  }
