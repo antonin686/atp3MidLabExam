@@ -94,6 +94,8 @@ router.post('/edit/:id', function(req, res){
 			if(req.session.u_type == 1)
 			{
 				res.redirect('/admin/home');
+			}else if(req.session.u_type == 2){
+				res.redirect('/scott/home');	
 			}
 			
 		}
