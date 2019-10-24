@@ -53,7 +53,7 @@ module.exports = {
 		});
 	},
 	delete: function(id, callback){
-		var sql = "delete from login where id="+id;
+		var sql = "delete from users where u_id="+id;
 		db.execute(sql, function(status){
 			callback(status);
 		});

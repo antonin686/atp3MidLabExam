@@ -88,9 +88,13 @@ router.post('/edit/:id', function(req, res){
 
 	userModel.update(user, function(result){
 		if(!result){
-            res.send('insert failed');
+            res.send('update failed');
 		}else{
-			res.render("/admin/home", { user : req.session.un});
+			if(req.session.u_type == 1)
+			{
+				res.redirect('/admin/home');
+			}
+			
 		}
 	});
 });

@@ -61,46 +61,14 @@ router.post('/user/create', function(req, res){
 	});
 });
 
-// User edit
+// User delete
 
-router.get('/user/edit/:id', function(req, res){
-	
-	var user = req.params.id;	
-	userModel.getById(user, function(result){
-		if(!result){
-            res.send('insert failed');
-		}else{
-			res.render("admin/user_edit", { user : req.session.un, userInfo: result});
-		}
-	});	
-});
-
-router.post('/employee/edit/:id', function(req, res){
-	
-	var user = {
-		id : req.params.id,
-		name : req.body.name,
-		contact: req.body.contact
-	}	
-	userModel.update(user, function(result){
-		if(!result){
-            res.send('insert failed');
-		}else{
-			res.redirect("/admin/userList");
-		}
-	});
-
-	
-});
-
-
-
-router.get('/employee/delete/:id', function(req, res){
+router.get('/user/delete/:id', function(req, res){
 	
 	var user = req.params.id;	
 	userModel.delete(user, function(result){
 		if(!result){
-            res.send('insert failed');
+            res.send('Delete failed');
 		}else{
 			res.redirect("/admin/userList");
 		}
@@ -108,8 +76,6 @@ router.get('/employee/delete/:id', function(req, res){
 
 	
 });
-
-
 
 
 router.get('/employee/search', function(req, res){
@@ -124,11 +90,6 @@ router.get('/employee/search', function(req, res){
 
 	
 });
-
-
-
-
-
 
 
 module.exports = router;
