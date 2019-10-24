@@ -35,9 +35,9 @@ module.exports = {
 			}
 		});	
 	},
-	insert: function(user, callback){
 
-		var sql = `insert into users values('','${user.username}', '${user.password}', '2')`;
+	insert: function(user, callback){
+		var sql = `insert into users values('', '${user.u_name}', '${user.username}', '${user.password}', '${user.contact}', '${user.u_type}') `;
 		db.execute(sql, function(status){
 			callback(status);
 		});
