@@ -1,6 +1,6 @@
 var express = require('express');
-var userModel = require('../models/user_model');
-var postModel = require('../models/post_model');
+var userModel = require('../models/users_model');
+var postModel = require('../models/posts_model');
 
 var router = express.Router();
 

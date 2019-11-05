@@ -7,8 +7,8 @@ var expressLayout = require('express-ejs-layouts');
 var ejs = require('ejs');
 var user = require('./controllers/user');
 var admin = require('./controllers/admin');
-var scott = require('./controllers/scott');
-//var logout = require('./controllers/logout');
+var scout = require('./controllers/scout');
+
 var app = express();
 
 //CONFIGURATION
@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 
 app.use('/admin', admin);
 app.use('/user', user);
-app.use('/scott', scott);
-//app.use('/logout', logout);
+app.use('/scout', scout);
+
 app.use(express.static('public'));
 
 //ROUTER

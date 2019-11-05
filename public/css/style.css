@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+/* BASIC */
+
+
+body {
+  
+  height: 100vh;
+}
+
+
 .navbar-dark .nav-item:hover {
     background-color: white;
   } 
@@ -6,6 +17,9 @@
     color: black;
   }
 
+  .navbar-dark .nav{
+    background-color: teal;
+  }
   .navbar-brand{
     padding-top: 0;
   }
@@ -16,4 +30,23 @@
   
   .card{
     margin: 10px;
+  }
+  .card-header{
+    background-color: teal;
+    color: white;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+  }
+
+  .list-group,
+  .breadcrumb{
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
