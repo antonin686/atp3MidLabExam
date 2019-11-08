@@ -15,7 +15,7 @@ router.get('*', function(req, res, next){
 	}		
 });
 
-router.get('/home', function(req, res){
+router.get('/home', (req,res) => {
 
 	postModel.getAll(1, function(result){
 		if(!result){
@@ -30,7 +30,7 @@ router.get('/home', function(req, res){
 });
 
 // post request
-router.get('/request', function(req, res){
+router.get('/post/request', (req,res) => {
 
 	postModel.getAll(0, function(result){
 		if(!result){
@@ -44,9 +44,24 @@ router.get('/request', function(req, res){
 	
 });
 
+
+router.get('/post/accept/:id', (req,res) => {
+	var id = req.params.id;
+	postModel.acceptPostRequest(id, function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.redirect('/admin/request');
+		}
+	});
+	
+});
+
 // UserList
 
-router.get('/userList', function(req, res){
+router.get('/userList', (req,res) => {
 
 	userModel.getAll(function(result){
 		if(!result){
@@ -59,14 +74,13 @@ router.get('/userList', function(req, res){
 	
 });
 
-
 // User create
 
-router.get('/user/create', function(req, res){
+router.get('/user/create', (req,res) => {
 	res.render("admin/user_create", { user : req.session.un });
 });
 
-router.post('/user/create', function(req, res){
+router.post('/user/create', (req,res) => {
 
 	var user = {
 		u_name : req.body.name,
@@ -87,7 +101,7 @@ router.post('/user/create', function(req, res){
 
 // User delete
 
-router.get('/user/delete/:id', function(req, res){
+router.get('/user/delete/:id', (req,res) => {
 	
 	var user = req.params.id;	
 	userModel.delete(user, function(result){
@@ -102,7 +116,7 @@ router.get('/user/delete/:id', function(req, res){
 });
 
 
-router.get('/employee/search', function(req, res){
+router.get('/employee/search', (req,res) => {
 		
 	userModel.getById(user, function(result){
 		if(!result){

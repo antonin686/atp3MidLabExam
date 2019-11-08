@@ -59,7 +59,7 @@ router.get('/profile', (req, res) => {
 		if (!result) {
 			res.send('insert failed');
 		} else {
-			res.render("profile", {
+			res.render("user/profile", {
 				user: req.session.un,
 				userInfo: result
 			});

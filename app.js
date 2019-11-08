@@ -34,6 +34,6 @@ app.get('/', function(req, res){
 });
 
 //SERVER STARTUP
-app.listen(8000, function(){
+app.listen(3000, function(){
 	console.log('server started at 8000...');
 });

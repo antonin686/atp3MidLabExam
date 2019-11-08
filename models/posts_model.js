@@ -13,6 +13,7 @@ module.exports = {
 				}
 			});
 	},
+
 	validate: function(user, callback){
 		var sql = "select * from users where username='"+user.username+"' and password='"+user.password+"'";
 		db.getResults(sql, function(result){
@@ -24,6 +25,7 @@ module.exports = {
 			}
 		});	
 	},
+
 	getAll: function(status,callback){
 		var sql = `select * from posts where status = ${status}`;
 		
@@ -56,8 +58,16 @@ module.exports = {
 			callback(status);
 		});
 	},
-	update: function(user, callback){
-		var sql = `update users set u_name ='${user.name}', password='${user.password}', contact= '${user.contact}' where u_id = ${user.u_id}`;
+	acceptPostRequest: function(id, callback){
+		var sql = `update posts set status = '1' where p_id = ${id}`;	
+		//console.log(sql);
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
+
+	update: function(id, callback){
+		var sql = `update users set u_name ='${id.name}', password='${id.password}', contact= '${id.contact}' where u_id = ${id.u_id}`;
 		
 		//console.log(sql);
 
@@ -65,6 +75,7 @@ module.exports = {
 			callback(status);
 		});
 	},
+
 	delete: function(id, callback){
 		var sql = "delete from users where u_id="+id;
 		db.execute(sql, function(status){
