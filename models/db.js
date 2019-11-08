@@ -14,7 +14,7 @@ var getConnection = function(callback){
 		    return;
 		  }
 	 
-	  console.log('connected as id ' + connection.threadId);
+	 // console.log('connected as id ' + connection.threadId);
 	});
 	callback(connection);
 }

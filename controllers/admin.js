@@ -1,6 +1,7 @@
 var express = require('express');
 var userModel = require('../models/users_model');
 var postModel = require('../models/posts_model');
+var commentModel = require('../models/comment_model');
 
 var router = express.Router();
 
@@ -23,7 +24,7 @@ router.get('/home', (req,res) => {
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.render("admin/home", { user : req.session.un, postList: result });
+			res.render("admin/home", { title: 'Admin', layout: 'layout_admin', user : req.session.un, postList: result });
 		}
 	});
 	
@@ -38,7 +39,7 @@ router.get('/post/request', (req,res) => {
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.render("admin/request", { user : req.session.un, postList: result });
+			res.render("admin/post_request", { title: 'Admin', layout: 'layout_admin', user : req.session.un, postList: result });
 		}
 	});
 	
@@ -59,6 +60,73 @@ router.get('/post/accept/:id', (req,res) => {
 	
 });
 
+router.get('/post/delete/:id', (req,res) => {
+	var id = req.params.id;
+	postModel.delete(id, function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.redirect('/admin/home');
+		}
+	});
+	
+});
+router.get('/post/info/:id', (req,res) => {
+	var id = req.params.id;
+	postModel.getById(id, function(result){
+		if(!result){
+            //res.render("scott/postList", { user : req.session.un, postList: false });
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.render("admin/post_info", { title: 'Admin', layout: 'layout_admin', user : req.session.un, postInfo: result });
+		}
+	});
+	
+});
+
+router.get('/post/postCommentAjax/:id/:comment', (req,res) => {
+	var comment = {
+		txt: req.params.comment,
+		p_id: req.params.id,
+		user: req.session.un
+	};
+	commentModel.insert(comment, (result) => {
+		if(!result){
+            res.send(false);
+		}else{      	
+            //console.log(result);
+			res.send(true)
+		}
+	});	
+});
+
+router.get('/post/getCommentAjax/:id', (req,res) => {
+	var id = req.params.id;
+	commentModel.getAll(id, (result) => {
+		if(!result){
+            res.send(false);
+		}else{      	
+            //console.log(result);
+			res.send(result);
+		}
+	});	
+});
+
+router.get('/post/commentDeleteAjax/:id', (req,res) => {
+	var id = req.params.id;
+	commentModel.delete(id, (result) => {
+		if(!result){
+            res.send(false);
+		}else{      	
+            //console.log(result);
+			res.send(true);
+		}
+	});	
+});
+
 // UserList
 
 router.get('/userList', (req,res) => {
@@ -67,7 +135,7 @@ router.get('/userList', (req,res) => {
 		if(!result){
             res.render("admin/userList", { user : req.session.un, empList: false });
 		}else{      	
-			res.render("admin/userList", { user : req.session.un, empList: result });	
+			res.render("admin/userList", { title: 'Admin', layout: 'layout_admin', user : req.session.un, empList: result });	
 		}
 	});
 
@@ -77,7 +145,7 @@ router.get('/userList', (req,res) => {
 // User create
 
 router.get('/user/create', (req,res) => {
-	res.render("admin/user_create", { user : req.session.un });
+	res.render("admin/user_create", { title: 'Admin', layout: 'layout_admin', user : req.session.un });
 });
 
 router.post('/user/create', (req,res) => {
@@ -114,21 +182,6 @@ router.get('/user/delete/:id', (req,res) => {
 
 	
 });
-
-
-router.get('/employee/search', (req,res) => {
-		
-	userModel.getById(user, function(result){
-		if(!result){
-            res.send('insert failed');
-		}else{
-			res.send(JSON.stringify(result))
-		}
-	});
-
-	
-});
-
 
 module.exports = router;
 
