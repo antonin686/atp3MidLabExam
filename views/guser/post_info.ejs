@@ -1,0 +1,152 @@
+<div class="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb pd-3">
+            <li class="breadcrumb-item"><a href="/guser/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/guser/post/request">Post</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Info</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Post Information (#<span id="p_id"><%= postInfo.p_id %></span>)
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="col-md-6 mr-auto pt-3 pl-4">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal">
+                                Add to Wishlist
+                            </button>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table">
+                                <tbody>
+                                    <tr class="bg-dark text-light">
+                                        <th>Place Name</th>
+                                        <td> <%= postInfo.place_name %> </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Country</th>
+                                        <td><%= postInfo.country %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cost</th>
+                                        <td> <%= postInfo.cost %> </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Travel Medium</th>
+                                        <td> <%= postInfo.travel_medium %> </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Short History</th>
+                                        <td> <%= postInfo.short_history %> </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Place Info</th>
+                                        <td><%= postInfo.place_info %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="commentBox" class="form-control"
+                                        placeholder="Join the disccusion">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" id="btn-post" type="button">
+                                            <span id="btn-span" role="status" aria-hidden="true"></span>
+                                            Add Comment
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="commentsBox">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals Delete -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add to Wishlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="POST">
+                <div class="modal-body">
+                    Are you sure your want to add this Post to wishlist?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <a href="/guser/post/addToWishlist/<%= postInfo.p_id %>" class="btn btn-info" role="button">Yes</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+
+        getComments();
+
+        $('#btn-post').click(() => {
+            var comment = $('#commentBox').val();
+            var id = $('#p_id').text();
+            console.log(comment, id)
+            $('#btn-span').addClass('spinner-border spinner-border-sm');
+            $.ajax({
+                url: `/guser/post/postCommentAjax/${id}/${comment}`,
+
+                success: (status) => {
+                    $('#btn-span').removeClass();
+                    $('#commentBox').val(' ');
+                    getComments();
+                }
+            });
+        });
+
+        function getComments() {
+            var id = $('#p_id').text();
+            $.ajax({
+
+                url: `/guser/post/getCommentAjax/${id}`,
+                success: (commentList) => {
+                    //console.log(commentList);
+                    var html = '';
+
+                    if (commentList != null) {
+                        for (var i = 0; i < commentList.length; i++) {
+                            html += `<div class="card-body" style='border: 0.5px silver solid'>`;
+                            html += `<strong> ${commentList[i].username} </strong> <br>`;
+                            html += `<span> ${commentList[i].comment} </span> <br>`
+                            html += `<small> ${commentList[i].date} </small> <br>`
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+                        $('#commentsBox').html(html);
+                    }
+                }
+            });
+        }
+    });
+</script>

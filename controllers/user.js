@@ -1,7 +1,6 @@
-var express = require('express');
-var userModel = require('../models/users_model');
-var router = express.Router();
-
+const express = require('express');
+const userModel = require('../models/users_model');
+const router = express.Router();
 const {
 	check,
 	validationResult
@@ -9,10 +8,58 @@ const {
 
 // Login
 router.get('/login', (req, res) => {
+
 	res.render("user/login", {
 		title: 'Login',
 		errors: null
 	});
+});
+
+router.get('/register', (req, res) => {
+	res.render("user/register", {
+		title: 'Register',
+		errors: null
+	});
+});
+
+router.post('/register', [
+	check('name', 'Name is empty').not().isEmpty(),
+	check('username', 'Username is empty').not().isEmpty(),
+	check('password', 'Password is empty').not().isEmpty(),
+	check('contact', 'Contact is empty').not().isEmpty(),
+	check('u_type', 'User Type is empty').not().isEmpty()
+], (req, res) => {
+
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log(errors);
+		res.render("user/register", {
+			title: 'Register',
+			errors: errors.array()
+		});
+	} else {
+
+		var user = {
+			u_name: req.body.name,
+			contact: req.body.contact,
+			username: req.body.username,
+			password: req.body.password,
+			u_type: req.body.u_type
+		};
+
+		userModel.insert(user, function (status) {
+
+			if (!status) {
+				res.redirect('/');
+			} else {
+
+				res.render("user/login", {
+					title: 'Login',
+					errors: null
+				});
+			}
+		});
+	}
 });
 
 router.post('/login', (req, res) => {
@@ -38,15 +85,15 @@ router.post('/login', (req, res) => {
 				res.redirect('/admin/home');
 			} else if (status.u_type == 2) {
 				res.redirect('/scout/home');
+			} else if (status.u_type == 3) {
+				res.redirect('/guser/home');
 			}
-
 		}
 	});
 
 });
 
 // Profile
-
 router.get('/profile', (req, res) => {
 
 	if (req.session.un == null) {
@@ -65,7 +112,6 @@ router.get('/profile', (req, res) => {
 			});
 		}
 	});
-
 });
 
 // Edit

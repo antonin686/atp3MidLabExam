@@ -1,13 +1,14 @@
 var express = require('express');
 var postModel = require('../models/posts_model');
 var commentModel = require('../models/comment_model');
+var wishlistModel = require('../models/wishlist_model');
 var router = express.Router();
 
 // express-validator
 const { check, validationResult } = require('express-validator');
 
 router.get('*', (req, res, next) => {
-	if(req.session.un != null && req.session.u_type == 2)
+	if(req.session.un != null && req.session.u_type == 3)
 	{
 		next();
 	}	
@@ -24,7 +25,7 @@ router.get('/home', function(req, res){
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.render("scout/home", { title: 'home', layout: 'layout_scout', user : req.session.un, postList: result });
+			res.render("guser/home", { title: 'home', layout: 'layout_guser', user : req.session.un, postList: result });
 		}
 	});
 
@@ -40,7 +41,7 @@ router.get('/post/info/:id', (req,res) => {
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.render("scout/post_info", { title: 'Scout', layout: 'layout_scout', user : req.session.un, postInfo: result });
+			res.render("guser/post_info", { title: 'guser', layout: 'layout_guser', user : req.session.un, postInfo: result });
 		}
 	});
 	
@@ -85,7 +86,7 @@ router.get('/postList', function(req, res){
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.render("scout/postList", { user : req.session.un, layout: 'layout_scout',postList: result });	
+			res.render("scout/postList", { user : req.session.un, postList: result });	
 		}
 	});
 		
@@ -103,8 +104,8 @@ router.post('/post/create', function(req, res){
 	var post = {
 		p_name : req.body.place_name,
 		country : req.body.country,
-		p_info : req.body.place_info.replace(/[^a-zA-Z ]/g, ""),
-		short : req.body.short_history.replace(/[^a-zA-Z ]/g, ""),
+		p_info : req.body.place_info,
+		short : req.body.short_history,
         t_medium : req.body.travel_medium,
         cost : req.body.cost,
         u_id : req.session.u_id
@@ -119,19 +120,58 @@ router.post('/post/create', function(req, res){
 	});
 });
 
-// User delete
-
-router.get('/user/delete/:id', function(req, res){
+router.get('/post/addToWishlist/:id', (req,res) => {
+	var ids = {
+		p_id : req.params.id,
+		u_id : req.session.u_id
+	};
+	wishlistModel.insert(ids, function(result){
+		if(!result){
+            res.send("no data");
+		}else{      	
+            //console.log(result);
+			res.redirect('/guser/home');
+		}
+	});
 	
-	var user = req.params.id;	
-	postModel.delete(user, function(result){
+});
+
+router.get('/wishList/delete/:id', function(req, res){
+	
+	var id = req.params.id;	
+	wishlistModel.delete(id, function(result){
 		if(!result){
             res.send('Delete failed');
 		}else{
-			res.redirect("/admin/userList");
+			res.redirect("/guser/wishlist");
+		}
+	});
+});
+
+
+router.get('/employee/search', function(req, res){
+		
+	userModel.getById(user, function(result){
+		if(!result){
+            res.send('insert failed');
+		}else{
+			res.send(JSON.stringify(result))
 		}
 	});
 
+	
+});
+
+router.get('/wishlist', (req,res) => {
+
+	var id = req.session.u_id;
+	wishlistModel.getAll(id,function(result){
+		if(!result){
+            res.render("guser/wishlist", { title: 'guser', user : req.session.un, layout: 'layout_guser', wishList: false });
+		}else{      	
+			res.render("guser/wishlist", { title: 'guser', layout: 'layout_guser', user : req.session.un, wishList: result });	
+		}
+	});
 });
 
 module.exports = router;

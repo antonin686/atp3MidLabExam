@@ -1,15 +1,16 @@
 //DECLARATION
-var express = require('express');
-var bodyParser = require('body-parser');
-var expSession = require('express-session');
-var cookieParser = require('cookie-parser');
-var expressLayout = require('express-ejs-layouts');
-var ejs = require('ejs');
-var user = require('./controllers/user');
-var admin = require('./controllers/admin');
-var scout = require('./controllers/scout');
+const express = require('express');
+const bodyParser = require('body-parser');
+const expSession = require('express-session');
+const cookieParser = require('cookie-parser');
+const expressLayout = require('express-ejs-layouts');
+const ejs = require('ejs');
+const user = require('./controllers/user');
+const admin = require('./controllers/admin');
+const scout = require('./controllers/scout');
+const guser = require('./controllers/guser');
 
-var app = express();
+const app = express();
 
 //CONFIGURATION
 app.use(expressLayout);
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use('/admin', admin);
 app.use('/user', user);
 app.use('/scout', scout);
+app.use('/guser', guser);
 
 app.use(express.static('public'));
 

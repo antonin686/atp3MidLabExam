@@ -1,0 +1,88 @@
+<div class="bread">
+    <div class="container">
+        <ol class="breadcrumb pd-3">
+            <li class="breadcrumb-item"><a href="/guser/home">Dashboard</a></li>
+            <li class="breadcrumb-item active">Wishlist</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Wishlist</div>
+                <div class="card-body">
+                    <table id="myTable" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Place Name</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% var total = 0;%>
+                            <% for(var i = 0; i< wishList.length; i++) {%>
+                            <tr>
+                                <th scope="row"> <%= i+1 %> </th>
+                                <td> <%= wishList[i].place_name %></td>
+                                <td> <%= wishList[i].country %> </td>
+                                <td> <%= wishList[i].cost %> </td>
+                                <% total += wishList[i].cost %>
+                                <td class="ml-auto">
+                                    <a class="btn btn-danger" href="/guser/wishList/delete/<%= wishList[i].w_id %>"
+                                        role="button">Remove</a>
+                                </td>
+                            </tr>
+                            <% } %>
+                            <% if(wishList.length > 0) {%>
+                            <tr>
+
+                                <td></td>
+                                <td></td>
+                                <th scope="row">Total Cost</th>
+                                <td> <%= total %></td>
+                                <td></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#myInput").keyup(function () {
+            tableFilter();
+        });
+
+        function tableFilter() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    console.log('td ', td)
+                    txtValue = td.textContent || td.innerText;
+                    console.log('txt ', txtValue)
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    });
+</script>

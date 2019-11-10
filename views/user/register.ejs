@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Register
+                </div>
+                <div class="card-body">
+                    <% if(errors != null) {%>
+                    <div class="alert alert-danger" role="alert">
+                        <% for(var i = 0; i< errors.length; i++) {%>
+                        <%= errors[i].msg%> <br><% } %>
+                    </div> <% } %>
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="Enter Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Contact</label>
+                            <input type="text" class="form-control" name="contact" placeholder="Enter Contact">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="u_type">User Type</label>
+                            </div>
+                            <select class="custom-select" name="u_type">
+                                <option value="2">Scott</option>
+                                <option value="3">General User</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

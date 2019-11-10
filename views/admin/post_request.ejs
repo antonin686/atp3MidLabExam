@@ -11,11 +11,10 @@
           <a class="btn btn-danger" href="/admin/post/delete/<%= postList[i].p_id %>" role="button">Delete</a>
         </div>
         <div class="card-body">
-          Country: <%= postList[i].country %> <br>
-          Info: <%= postList[i].place_info %> <br>
-          History: <%= postList[i].short_history %> <br>
-          travel Medium: <%= postList[i].travel_medium %> <br>
-          Cost: <%= postList[i].cost %> <br>
+          <strong>Country</strong>: <%= postList[i].country %> <br>
+          <strong>Info</strong>: <%= postList[i].place_info %> <br>
+          <strong>Travel Medium</strong>: <%= postList[i].travel_medium %> <br>
+          <strong>Cost</strong>: <%= postList[i].cost %> <br>
         </div>
       </div>
       <% } %>

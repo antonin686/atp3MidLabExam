@@ -3,7 +3,7 @@ var db = require('./db')
 module.exports = {
 	getById: function(id, callback){
 
-			var sql = "select * from posts where p_id="+id;
+			var sql = "select * from wishlist where w_id="+id;
 			console.log(sql);
 			db.getResults(sql, function(result){
 				if(result.length > 0 ){
@@ -14,8 +14,8 @@ module.exports = {
 			});
 	},
 
-	getAll: function(status,callback){
-		var sql = `select * from posts where status = ${status}`;
+	getAll: function(id,callback){
+		var sql = `SELECT posts.place_name,posts.cost,posts.country,wishlist.w_id FROM posts,wishlist WHERE posts.p_id = wishlist.p_id and wishlist.u_id = ${id}`;
 		
 		db.getResults(sql, function(results){
 			
@@ -28,7 +28,7 @@ module.exports = {
 	},
 
     getAllbyID: function(id, callback){
-		var sql = `select * from posts where u_id = ${id}`;
+		var sql = `select * from wishlist where u_id = ${id}`;
 		
 		db.getResults(sql, function(results){
 			
@@ -40,15 +40,15 @@ module.exports = {
 		});	
     },
     
-	insert: function(post, callback){
-		var sql = `insert into posts values('', '${post.p_name}', '${post.country}', '${post.p_info}', '${post.short}', '${post.t_medium}', '${post.cost}','0', '${post.u_id}') `;
-		console.log(sql)
+	insert: function(ids, callback){
+        var sql = `insert into wishlist values('', '${ids.p_id}', '${ids.u_id}') `;
+        console.log(sql)
 		db.execute(sql, function(status){
 			callback(status);
 		});
 	},
-	acceptPostRequest: function(id, callback){
-		var sql = `update posts set status = '1' where p_id = ${id}`;	
+	acceptidsRequest: function(id, callback){
+		var sql = `update wishlist set status = '1' where w_id = ${id}`;	
 		//console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
@@ -66,7 +66,7 @@ module.exports = {
 	},
 
 	delete: function(id, callback){
-		var sql = "delete from posts where p_id="+id;
+		var sql = "delete from wishlist where w_id="+id;
 		db.execute(sql, function(status){
 			callback(status);
 		});

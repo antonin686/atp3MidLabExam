@@ -45,7 +45,6 @@ router.get('/post/request', (req,res) => {
 	
 });
 
-
 router.get('/post/accept/:id', (req,res) => {
 	var id = req.params.id;
 	postModel.acceptPostRequest(id, function(result){
@@ -54,7 +53,7 @@ router.get('/post/accept/:id', (req,res) => {
             res.send("no data");
 		}else{      	
             //console.log(result);
-			res.redirect('/admin/request');
+			res.redirect('/admin/post/request');
 		}
 	});
 	
@@ -73,6 +72,7 @@ router.get('/post/delete/:id', (req,res) => {
 	});
 	
 });
+
 router.get('/post/info/:id', (req,res) => {
 	var id = req.params.id;
 	postModel.getById(id, function(result){
@@ -128,7 +128,6 @@ router.get('/post/commentDeleteAjax/:id', (req,res) => {
 });
 
 // UserList
-
 router.get('/userList', (req,res) => {
 
 	userModel.getAll(function(result){
@@ -138,12 +137,9 @@ router.get('/userList', (req,res) => {
 			res.render("admin/userList", { title: 'Admin', layout: 'layout_admin', user : req.session.un, empList: result });	
 		}
 	});
-
-	
 });
 
 // User create
-
 router.get('/user/create', (req,res) => {
 	res.render("admin/user_create", { title: 'Admin', layout: 'layout_admin', user : req.session.un });
 });
@@ -168,7 +164,6 @@ router.post('/user/create', (req,res) => {
 });
 
 // User delete
-
 router.get('/user/delete/:id', (req,res) => {
 	
 	var user = req.params.id;	
